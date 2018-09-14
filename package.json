@@ -1,0 +1,33 @@
+{
+  "name": "cleanblog",
+  "version": "1.0.0",
+  "description": "blog ",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yassine56/cleanblog.git"
+  },
+  "keywords": [
+    "nodejs",
+    "mongodb"
+  ],
+  "author": "Abouelouafa Yassine",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Yassine56/cleanblog/issues"
+  },
+  "homepage": "https://github.com/Yassine56/cleanblog#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "express-edge": "^1.0.0",
+    "mongoose": "^5.2.14"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.4"
+  }
+}
