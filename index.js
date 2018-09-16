@@ -9,7 +9,6 @@ const Post = require('./database/models/post');
 
 mongoose.connect('mongodb://localhost/cleanblogdb');
 
-
 app.use(require('express-edge'));
 
 app.use(express.static('public'));
@@ -36,15 +35,30 @@ app.post('/posts/store', (req, res) => {
   })
 })
 
-app.get('/', (req,res) => {
-  res.render('index');
+app.get('/', async (req,res) => {
+
+  let posts = await Post.find({});
+  console.log(posts);
+  res.render('index',{
+    posts
+  });
 })
 
 app.get('/about', (req,res) => {
   res.render('about');
 })
 
-app.get('/post', (req,res) => {
+app.get('/post/:id', async (req,res) => {
+  console.log(req.params);
+  let post = await Post.findById(req.params.id);
+  console.log("working");
+  res.render('post', {
+    post
+  });
+})
+
+app.get('/post', async (req,res) => {
+
   res.render('post');
 })
 
