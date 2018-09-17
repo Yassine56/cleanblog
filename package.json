@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/Yassine56/cleanblog#readme",
   "dependencies": {
+    "bcrypt": "^3.0.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "express-edge": "^1.0.0",
