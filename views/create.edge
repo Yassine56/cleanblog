@@ -17,7 +17,16 @@
 </header>
 
 <div class="col-md-8 offset-md-2">
-  <form class="" action="/posts/store" method="post">
+  <form class="" action="/posts/store" method="post" enctype="multipart/form-data">
+
+    <div class="control-group">
+      <div class="form-group floating-label-form-group controls">
+
+        <label> Author </label>
+        <input type="text" name="author" placeholder="Author">
+      </div>
+    </div>
+
     <div class="control-group">
       <div class="form-group floating-label-form-group controls">
 
@@ -37,6 +46,14 @@
 
         <label> Content </label>
         <textarea name="content" class="form-control"rows="10" cols="30" placeholder="content"></textarea>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="form-group floating-label-form-group controls">
+
+        <label> Image </label>
+        <input type="file" name="image">
       </div>
     </div>
 

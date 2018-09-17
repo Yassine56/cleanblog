@@ -2,7 +2,7 @@
 
 @section('content')
 
-<header class="masthead" style="background-image: url('/img/post-bg.jpg')">
+<header class="masthead" style="background-image: url('{{ post.image }}')">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">
@@ -11,14 +11,13 @@
           <h1>{{ post.title }}</h1>
           <h2 class="subheading">Problems look mighty small from 150 miles up</h2>
           <span class="meta">Posted by
-            <a href="#">Start Bootstrap</a>
-            on August 24, 2018</span>
+            <a href="#">{{post.author}}</a>
+            on {{post.createdat}}</span>
         </div>
       </div>
     </div>
   </div>
 </header>
-
 <!-- Post Content -->
 <article>
   <div class="container">

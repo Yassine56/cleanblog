@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 
+const fileupload = require('express-fileupload');
+
 const app = express();
 const bodyParser = require('body-parser');
 
@@ -17,6 +19,8 @@ app.set('views', `${__dirname}/views`);
 
 app.use(bodyParser.json());
 
+app.use(fileupload());
+
 app.use(bodyParser.urlencoded())
 
 app.listen(4000, () => {
@@ -25,15 +29,19 @@ app.listen(4000, () => {
 
 app.post('/posts/store', (req, res) => {
 
-  Post.create({
-    title : req.body.title,
-    description : req.body.description,
-    content : req.body.content
+const { image } = req.files;
+
+image.mv(path.resolve(__dirname, 'public/posts', image.name ), (error) => {
+  Post.create( {
+    ...req.body,
+    image : '/posts/'+image.name
   }, (error, post) => {
-    console.log(post);
     res.redirect('/');
-  })
-})
+  });
+});
+
+
+});
 
 app.get('/', async (req,res) => {
 
