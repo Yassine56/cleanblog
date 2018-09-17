@@ -9,6 +9,9 @@ User.findOne({email}, (error, user)=> {
   if(user){
     bcrypt.compare(password, user.password, (error, same) => {
       if(same){
+
+        req.session.userid = user._id;
+
          res.redirect('/');
       }
       else {

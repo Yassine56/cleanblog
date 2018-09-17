@@ -1,12 +1,12 @@
 const express = require('express');
+
 const mongoose = require('mongoose');
 
 const fileupload = require('express-fileupload');
 
-const app = express();
-const bodyParser = require('body-parser');
+const session = require('express-session');
 
-mongoose.connect('mongodb://localhost/cleanblogdb');
+const bodyParser = require('body-parser');
 
 // MVC controllers
 const loginPageController = require('./controllers/loginpage');
@@ -33,6 +33,14 @@ const validatecreatepost = require('./middleware/storepost');
 
 
 
+
+mongoose.connect('mongodb://localhost/cleanblogdb');
+const app = express();
+
+
+app.use(session({
+  secret: 'macbook cat key'
+}));
 
 app.use('/posts/store', validatecreatepost);
 
