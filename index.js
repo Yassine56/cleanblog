@@ -9,6 +9,9 @@ const bodyParser = require('body-parser');
 mongoose.connect('mongodb://localhost/cleanblogdb');
 
 // MVC controllers
+const loginPageController = require('./controllers/loginpage');
+
+const loginController = require('./controllers/login');
 
 const createPostController = require('./controllers/createpost');
 
@@ -50,6 +53,7 @@ app.listen(4000, () => {
 })
 
 // /////////     get requests
+app.get('/auth/login', loginPageController);
 
 app.get('/auth/register', createUserController);
 
@@ -57,9 +61,12 @@ app.get('/post/:id', getPostController );
 
 app.get('/', homePageController);
 
-app.get('/newpost', createPostController )
+app.get('/newpost', createPostController );
+
+
 
 //////////  post requests
+app.post('/user/login', loginController);
 
 app.post('/posts/store', storePostController);
 
