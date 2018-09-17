@@ -9,6 +9,31 @@ const bodyParser = require('body-parser');
 
 const Post = require('./database/models/post');
 
+
+
+
+const createPostController = require('./controllers/createpost');
+
+const homePageController = require('./controllers/homepage');
+
+const storePostController = require('./controllers/storepost');
+
+const getPostController = require('./controllers/getpost');
+
+
+
+
+
+const validatecreatepost = (req, res, next) => {
+  if(!req.files || !req.body.author || !req.body.description || !req.body.content || !req.body.title ){
+    console.log("not working");
+    return res.redirect('/newpost')
+  }
+  next();
+}
+
+
+
 mongoose.connect('mongodb://localhost/cleanblogdb');
 
 app.use(require('express-edge'));
@@ -27,53 +52,16 @@ app.listen(4000, () => {
   console.log('server listening on port 4000..');
 })
 
-app.post('/posts/store', (req, res) => {
-
-const { image } = req.files;
-
-image.mv(path.resolve(__dirname, 'public/posts', image.name ), (error) => {
-  Post.create( {
-    ...req.body,
-    image : '/posts/'+image.name
-  }, (error, post) => {
-    res.redirect('/');
-  });
-});
 
 
-});
 
-app.get('/', async (req,res) => {
 
-  let posts = await Post.find({});
-  console.log(posts);
-  res.render('index',{
-    posts
-  });
-})
+app.post('/posts/store', storePostController);
 
-app.get('/about', (req,res) => {
-  res.render('about');
-})
+app.get('/post/:id', getPostController );
 
-app.get('/post/:id', async (req,res) => {
-  console.log(req.params);
-  let post = await Post.findById(req.params.id);
-  console.log("working");
-  res.render('post', {
-    post
-  });
-})
+app.use('/posts/store', validatecreatepost);
 
-app.get('/post', async (req,res) => {
+app.get('/', homePageController);
 
-  res.render('post');
-})
-
-app.get('/contact', (req,res) => {
-  res.render('contact');
-})
-
-app.get('/newpost', (req,res) => {
-  res.render('create');
-})
+app.get('/newpost', createPostController )
