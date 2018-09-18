@@ -4,9 +4,11 @@ const mongoose = require('mongoose');
 
 const fileupload = require('express-fileupload');
 
-const session = require('express-session');
+const expressSession = require('express-session');
 
 const bodyParser = require('body-parser');
+
+const connectFlash = require('connect-flash');
 
 // MVC controllers
 const loginPageController = require('./controllers/loginpage');
@@ -24,12 +26,15 @@ const getPostController = require('./controllers/getpost');
 const createUserController = require('./controllers/createuser');
 
 const storeUserController = require('./controllers/storeuser');
+
+const connectMongo = require('connect-mongo');
 // custome middleware
 
 
-
+const auth = require ('./middleware/auth');
 
 const validatecreatepost = require('./middleware/storepost');
+
 
 
 
@@ -38,9 +43,17 @@ mongoose.connect('mongodb://localhost/cleanblogdb');
 const app = express();
 
 
-app.use(session({
-  secret: 'macbook cat key'
+const mongoStore = connectMongo(expressSession);
+
+
+app.use(expressSession({
+  secret: 'macbook cat key',
+  store : new mongoStore({
+    mongooseConnection : mongoose.connection
+  })
 }));
+
+app.use(connectFlash());
 
 app.use('/posts/store', validatecreatepost);
 
@@ -69,13 +82,13 @@ app.get('/post/:id', getPostController );
 
 app.get('/', homePageController);
 
-app.get('/newpost', createPostController );
+app.get('/newpost', auth, createPostController );
 
 
 
 //////////  post requests
 app.post('/user/login', loginController);
 
-app.post('/posts/store', storePostController);
+app.post('/posts/store', auth, storePostController);
 
 app.post('/auth/register', storeUserController);
