@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const PostSchema = mongoose.Schema({
 
-  author : String,
+  author : {
+    type : mongoose.Schema.Types.ObjectId,
+    ref : 'user',
+    required : true
+  },
 
   title : String,
 
