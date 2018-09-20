@@ -39,6 +39,8 @@ const logoutController = require('./controllers/logout');
 const app = express();
 
 
+
+
 app.use(expressSession({
   secret: 'macbook cat key',
   store : new mongoStore({
@@ -58,7 +60,7 @@ app.use(bodyParser.json());
 
 app.use(fileupload());
 
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.urlencoded());
 
 
 
